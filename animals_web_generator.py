@@ -7,13 +7,15 @@ with open('animals_data.json', 'r') as file:
 output = ''
 for animal in animals:
     output += '<li class="cards__item">'
-    output += f'Name: {animal['name'].capitalize()}<br/>\n'
+    output += f'<div class="card__title">{animal['name'].capitalize()}</div>'
+    output += '<p class="card__text">'
     if 'diet' in animal['characteristics']:
-        output += f'Diet: {animal['characteristics']['diet'].capitalize()}<br/>\n'
+        output += f'<strong>Diet:</strong> {animal['characteristics']['diet'].capitalize()}<br/>\n'
     if 'locations' in animal:
-        output +=f'Location: {', '.join(animal['locations']).title()}<br/>\n'
+        output +=f'<strong>Location:</strong> {', '.join(animal['locations']).title()}<br/>\n'
     if 'type' in animal['characteristics']:
-        output += f'Type: {animal['characteristics']['type'].capitalize()}<br/>\n'
+        output += f'<strong>Type:</strong> {animal['characteristics']['type'].capitalize()}<br/>\n'
+    output += '</p>'
     output += '</li>'
 
 
