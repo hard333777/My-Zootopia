@@ -50,5 +50,6 @@ def write_html_file(data_for_formatting):
 
 
 def main():
-    data_for_formatting = get_data_for_the_formatting()
-    write_html_file(data_for_formatting)
+    if __name__ == '__main__':
+        data_for_formatting = get_data_for_the_formatting()
+        write_html_file(data_for_formatting)
