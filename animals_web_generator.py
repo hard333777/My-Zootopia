@@ -1,18 +1,22 @@
 import json
+from json import JSONDecodeError
+
 
 def serialize_animal(animal_obj):
     """Convert an animal object into an HTML-formatted string for display."""
     try:
         output = ''
         output += '<li class="cards__item">'
-        output += f'<div class="card__title">{animal_obj.get('name').capitalize()}</div>'
+        output += f"<div class='card__title'>{animal_obj.get("name", "Unknown").capitalize()}</div>"
         output += '<p class="card__text">'
-        if 'diet' in animal_obj['characteristics']:
-            output += f'<strong>Diet:</strong> {animal_obj.get('characteristics', {}).get('diet').capitalize()}<br/>\n'
+        if 'diet' in animal_obj["characteristics"]:
+            output += (f"<strong>Diet:</strong> "
+                       f"{animal_obj.get("characteristics", {}).get('diet', "Unknown").capitalize()}<br/>\n")
         if 'locations' in animal_obj:
-            output += f'<strong>Location:</strong> {', '.join(animal_obj.get('locations')).title()}<br/>\n'
-        if 'type' in animal_obj['characteristics']:
-            output += f'<strong>Type:</strong> {animal_obj.get('characteristics', {}).get('type').capitalize()}<br/>\n'
+            output += f"<strong>Location:</strong> {', '.join(animal_obj.get('locations', "Unknown")).title()}<br/>\n"
+        if 'type' in animal_obj["characteristics"]:
+            output += (f"<strong>Type:</strong> "
+                       f"{animal_obj.get('characteristics', {}).get('type', "Unknown").capitalize()}<br/>\n")
         output += '</p>'
         output += '</li>'
         return output
@@ -29,7 +33,7 @@ def get_data_for_the_formatting():
         for animal in animals:
             result += serialize_animal(animal)
         return result
-    except TypeError:
+    except (TypeError, JSONDecodeError):
         print(f"{animal} has the wrong format and was not serialized.")
     except FileNotFoundError:
         print('File was not found.')
@@ -50,6 +54,9 @@ def write_html_file(data_for_formatting):
 
 
 def main():
-    if __name__ == '__main__':
-        data_for_formatting = get_data_for_the_formatting()
-        write_html_file(data_for_formatting)
+    data_for_formatting = get_data_for_the_formatting()
+    write_html_file(data_for_formatting)
+
+
+if __name__ == '__main__':
+    main()
